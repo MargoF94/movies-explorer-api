@@ -1,0 +1,48 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "Приложение по поиску и сохранению фильмов",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MargoF94/movies-explorer-api.git"
+  },
+  "keywords": [
+    "expressjs",
+    "node"
+  ],
+  "author": "Margarita Fedorovich <localmoyashi@yandex.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MargoF94/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/MargoF94/movies-explorer-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "celebrate": "^15.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.4.0",
+    "express-winston": "^4.2.0",
+    "helmet": "^5.1.0",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongod": "^2.0.0",
+    "mongodb": "^4.6.0",
+    "mongoose": "^6.3.4",
+    "validator": "^13.7.0",
+    "winston": "^3.7.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.16"
+  }
+}
