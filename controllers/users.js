@@ -8,7 +8,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError'); // 401
 const NotFoundError = require('../errors/NotFoundError'); // 404
 const ConflictError = require('../errors/ConflictError'); // 409
 
-const { JWT_SECRET = 'super-strong-secret' } = process.env;
+// const { JWT_SECRET = 'super-strong-secret' } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // # возвращает информацию о пользователе (email и имя)
 // GET /users/me
@@ -108,11 +109,12 @@ module.exports.login = (req, res, next) => {
       const id = user._id;
       const token = jwt.sign(
         { _id: user._id },
-        JWT_SECRET,
+        NODE_ENV === 'production' ? JWT_SECRET : 'qwsqwsqwsqws-secret',
         { expiresIn: '7d' },
       );
       console.log(`JWT in Login Controller: ${token}`);
       console.log(`user id in Login Controller: ${id}`);
+      console.log(`JWT_SECRET in Login Controller: ${JWT_SECRET}`);
       return res.send({ jwt: token, _id: id });
     })
     .catch((err) => {
