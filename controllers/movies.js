@@ -46,24 +46,10 @@ module.exports.createMovie = (req, res, next) => {
     owner,
   })
     .then((movie) => {
-      res.send({
-        country: movie.country,
-        director: movie.director,
-        duration: movie.duration,
-        year: movie.year,
-        description: movie.description,
-        image: movie.image,
-        trailerLink: movie.trailerLink,
-        nameRU: movie.nameRU,
-        nameEN: movie.nameEN,
-        thumbnail: movie.thumbnail,
-        movieId: movie._id,
-        owner: movie.owner,
-      });
+      res.send({ movie });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        console.log(err);
         next(new BadRequestError('Переданы некорректные данные при создании фильма.'));
       } else {
         next(err);
@@ -78,17 +64,19 @@ module.exports.deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
   Movie.findById(movieId)
     .then((movie) => {
-      if (!movie) {
-        next(new NotFoundError('Передан несуществующий _id фильма.'));
-      } else {
-        if (!movie.owner._id.equals(req.user._id)) {
-          next(new ForbiddenError('Вы не можете удлить чужой фильм.'));
-          return;
-        }
-        movie.remove()
+      if (movie.owner._id.equals(req.user._id)) {
+        return movie.remove()
           .then(() => {
             res.send({ message: 'Фильм успешно удален' });
           });
+      }
+      throw ForbiddenError('Вы не можете удлить чужой фильм.');
+    })
+    .catch((err) => {
+      if (err.statusCode === 404) {
+        next(new NotFoundError('Передан несуществующий _id фильма.'));
+      } else {
+        next(err);
       }
     })
     .catch(next);

@@ -7,15 +7,12 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  // const token = req.headers.authorization;
   if (!authorization) {
     next(new UnauthorizedError('Пожалуйста, сначала авторизуйтесь.'));
+    return;
   }
   console.log(`Authorization in backend auth: ${authorization}`);
   console.log(`JWT_SECRET in backend auth: ${JWT_SECRET}`);
-  // const token = authorization.replace('Bearer ', '');
-
-  // console.log(`Token: ${token}`);
 
   let payload;
 
@@ -23,7 +20,7 @@ module.exports = (req, res, next) => {
     // попытаемся верифицировать токен
     payload = jwt.verify(
       authorization,
-      NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret',
+      NODE_ENV === 'production' ? JWT_SECRET : 'qwsqwsqwsqws-secret',
     );
   } catch (err) {
     // отправим ошибку, если не получилось

@@ -17,10 +17,10 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 module.exports.getCurrentUser = (req, res, next) => {
   console.log(`In middleware getCurrentUser: user _id: ${req.params._id}`);
 
-  const { authorization } = req.headers;
-  if (!authorization) {
-    next(new UnauthorizedError('Нет доступа.'));
-  }
+  // const { authorization } = req.headers;
+  // if (!authorization) {
+  //   next(new UnauthorizedError('Нет доступа.'));
+  // }
 
   return User.findById(req.user._id)
     .then((user) => res.send({ data: user }))
@@ -55,6 +55,8 @@ module.exports.updateUser = (req, res, next) => {
         next(new BadRequestError('Переданы некорректные данные при обновлении профиля.'));
       } else if (err.name === 'CastError') {
         next(new BadRequestError('Некорректный id.'));
+      } else if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже зарегестрирован.'));
       } else {
         next(err);
       }
