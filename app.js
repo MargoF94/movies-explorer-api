@@ -14,6 +14,7 @@ const { NODE_ENV, PORT, MONGO_URL } = process.env;
 const app = express();
 
 app.use(helmet());
+app.use(requestLogger);
 app.use(rateLimiter);
 
 mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : 'mongodb://127.0.0.1:27017/bitfilmsdb', {
@@ -31,7 +32,6 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use(requestLogger);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());
