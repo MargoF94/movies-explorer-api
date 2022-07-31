@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
 
   try {
     // попытаемся верифицировать токен
+    console.log('verify');
     payload = jwt.verify(
       authorization,
       NODE_ENV === 'production' ? JWT_SECRET : 'qwsqwsqwsqws-secret',
@@ -28,6 +29,7 @@ module.exports = (req, res, next) => {
     next(new UnauthorizedError('Необходима авторизация.'));
   }
 
+  console.log('PLAYLOAD CREATED');
   req.user = payload; // записываем пейлоуд в объект запроса
   next(); // пропускаем запрос дальше
 };

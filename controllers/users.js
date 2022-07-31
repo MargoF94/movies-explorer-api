@@ -15,7 +15,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 // GET /users/me
 
 module.exports.getCurrentUser = (req, res, next) => {
-  console.log(`In middleware getCurrentUser: user _id: ${req.params._id}`);
+  console.log(`In middleware getCurrentUser: user _id: ${req.user._id}`);
 
   // const { authorization } = req.headers;
   // if (!authorization) {

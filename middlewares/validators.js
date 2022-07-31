@@ -33,7 +33,7 @@ module.exports.validateUpdateUser = celebrate({
 
 module.exports.validateMovieId = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().length(24).hex().required(),
+    movieId: Joi.string().required(),
   }),
 });
 
